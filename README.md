@@ -67,4 +67,4 @@ commands/init-jira-flow.md
 
 ## Migration
 
-See [docs/migration-from-claude.md](docs/migration-from-claude.md) for `.claude/` to `.codex/` migration notes.
+See [docs/migration-from-legacy.md](docs/migration-from-legacy.md) for legacy-to-Codex migration notes.

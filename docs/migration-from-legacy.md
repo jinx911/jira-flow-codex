@@ -1,6 +1,6 @@
-# Migration From Claude-Style Jira-Flow
+# Migration From Legacy Jira-Flow
 
-This project is a Codex-native port. It intentionally does not install or modify legacy Claude directories.
+This project is Codex-native. It intentionally does not install or modify legacy runtime directories.
 
 ## Directory Mapping
 
@@ -13,7 +13,7 @@ This project is a Codex-native port. It intentionally does not install or modify
 
 ## Config Migration
 
-When initializing an existing project, `init-jira-flow` may read a legacy `.claude/project-config.md` as a compatibility source. It should write the Codex config to `.codex/jira-flow/project-config.md`.
+When initializing an existing project, `init-jira-flow` may read a legacy project config as a compatibility source. It should write the Codex config to `.codex/jira-flow/project-config.md`.
 
 Do not copy secrets into the Codex config. Use environment variable names or secret-manager references.
 

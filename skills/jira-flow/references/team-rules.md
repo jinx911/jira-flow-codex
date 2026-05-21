@@ -88,6 +88,6 @@ Tech stack:
 
 Role-specific config: The Leader will pass any config you need (database/migration/build/test environment) via messages when assigning tasks
   Full project config: {root_path}/.codex/jira-flow/project-config.md (read to get role-specific info)
-  Migrated compatibility config, if present: {root_path}/.claude/project-config.md (read-only fallback)
+  Migrated compatibility config, if present: project-level legacy config (read-only fallback)
   jira-flow process config: ~/.codex/skills/jira-flow/SKILL.md and references
 ```

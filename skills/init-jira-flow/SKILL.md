@@ -26,7 +26,7 @@ Create:
 <project-root>/.codex/jira-flow/state/
 ```
 
-Do not create or overwrite legacy Claude files.
+Do not create or overwrite legacy runtime files.
 
 ## Detection
 
@@ -40,7 +40,7 @@ Inspect the project root for:
 - `Cargo.toml`
 - `.git`
 - Docker files
-- existing `.claude/project-config.md` for migration compatibility
+- existing legacy project config for migration compatibility
 
 ## Atlassian
 
@@ -48,4 +48,4 @@ Use Codex Atlassian Rovo tools to confirm access and discover `cloudId`.
 
 ## Config Rules
 
-If `.codex/jira-flow/project-config.md` already exists, read it and ask before overwriting. If `.claude/project-config.md` exists, offer to import compatible fields into the Codex config.
+If `.codex/jira-flow/project-config.md` already exists, read it and ask before overwriting. If a legacy project config exists, offer to import compatible fields into the Codex config.

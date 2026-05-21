@@ -4,7 +4,7 @@
 
 **Goal:** Create a standalone Codex-native `jira-flow-codex` project with complete skill and role-reference skeleton.
 
-**Architecture:** Keep the Claude project untouched. Copy reusable workflow material into a new Codex project and replace the runtime entrypoints with Codex `SKILL.md` files.
+**Architecture:** Keep the original project untouched. Copy reusable workflow material into a new Codex project and replace the runtime entrypoints with Codex `SKILL.md` files.
 
 **Tech Stack:** Markdown skills, shell installer, Codex skills directory.
 
@@ -39,7 +39,7 @@ Expected: every skill directory has an uppercase `SKILL.md`.
 - [ ] **Step 4: Add installer**
 
 Write `install-codex.sh` to symlink `skills/*` into `${CODEX_HOME:-$HOME/.codex}/skills`.
-Expected: installer does not touch `~/.claude`.
+Expected: installer does not touch legacy runtime directories.
 
 - [ ] **Step 5: Verify structure**
 

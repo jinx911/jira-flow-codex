@@ -80,7 +80,7 @@ Phase briefs use `[superpowers:<skill-name>]` annotations. In Codex, these mean:
 1. Parse the Jira issue key from user input.
 2. Locate Codex project config:
    - Prefer `<project-root>/.codex/jira-flow/project-config.md`.
-   - Fall back to `<project-root>/.claude/project-config.md` only for migration compatibility.
+   - Fall back to legacy project config only when explicitly migrating an older project.
 3. Verify Atlassian Rovo availability using the current Codex Atlassian tools.
 4. Detect an existing state file at `<project-root>/.codex/jira-flow/state/{issue_key}.json`.
 5. Ask the user before enabling sub-agent/team mode unless they already requested it explicitly.
@@ -101,7 +101,7 @@ Use `references/phases/phase-2-brief.md`.
 
 Key Codex adjustments:
 
-- Use `update_plan` instead of Claude task APIs.
+- Use `update_plan` and the state file for task tracking.
 - Use shell git commands for branch work, respecting Codex sandbox escalation rules.
 
 ### Phase 3: TDD Development
@@ -163,4 +163,4 @@ Write state under:
 <project-root>/.codex/jira-flow/state/{issue_key}.json
 ```
 
-Do not write state under legacy Claude directories.
+Do not write state under legacy runtime directories.

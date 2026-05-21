@@ -2,19 +2,19 @@
 
 **中文** | [English](README.md)
 
-Jira-Flow Codex 是从 Claude Code 版 `jira-flow` 独立拆出的 Codex 原生工作流项目。
+Jira-Flow Codex 是独立的 Codex 原生工作流项目。
 
 目标：从 Jira Issue 出发，在 Codex 中完成需求分析、方案设计、任务规划、TDD 开发、代码评审、测试验证、提交收尾和 Jira 更新。
 
-## 与 Claude 版的区别
+## Codex 版设计
 
-| 能力 | Claude 版 | Codex 版 |
-| --- | --- | --- |
-| Skill 入口 | `~/.claude/skills/*/skill.md` | `~/.codex/skills/*/SKILL.md` |
-| Agent 定义 | `~/.claude/agents/*.md` | `skills/jira-flow/references/roles/*.md` |
-| 团队编排 | Claude slash command + message routing | Codex 主会话 + 可选 sub-agent |
-| Jira 工具 | Claude MCP 工具名 | Codex Atlassian Rovo 工具 |
-| 权限模型 | Claude settings allowlist | Codex sandbox + escalation approval |
+| 能力 | Codex 版 |
+| --- | --- |
+| Skill 入口 | `~/.codex/skills/*/SKILL.md` |
+| 角色定义 | `skills/jira-flow/references/roles/*.md` |
+| 团队编排 | Codex 主会话 + 可选 sub-agent |
+| Jira 工具 | Codex Atlassian Rovo 工具 |
+| 权限模型 | Codex sandbox + escalation approval |
 
 ## 项目结构
 
@@ -50,7 +50,7 @@ cd jira-flow-codex
 ./install-codex.sh
 ```
 
-安装脚本会把 `skills/*` 链接到 `~/.codex/skills/`。不会修改 Claude Code 的 `~/.claude` 目录。
+安装脚本会把 `skills/*` 链接到 `~/.codex/skills/`，并安装 slash command shim。
 
 ## 使用
 
@@ -86,4 +86,4 @@ cd jira-flow-codex
 
 ## 迁移说明
 
-从 `.claude/` 迁移到 `.codex/` 的说明见 [docs/migration-from-claude.md](docs/migration-from-claude.md)。
+旧版配置迁移说明见 [docs/migration-from-legacy.md](docs/migration-from-legacy.md)。

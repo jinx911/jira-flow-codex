@@ -3,7 +3,7 @@
 ## Development
 
 1. Create a branch for each logical change.
-2. Keep Claude-specific runtime behavior out of Codex runtime files.
+2. Keep legacy runtime behavior out of Codex runtime files.
 3. Keep examples generic. Do not include personal paths, private Jira keys, tokens, credentials, or customer data.
 4. Run verification before submitting changes.
 
@@ -25,7 +25,7 @@ Use concise conventional commits:
 ```text
 feat: add command shim
 fix: remove hardcoded install path
-docs: document migration from claude config
+docs: document migration from legacy config
 ```
 
 ## Security

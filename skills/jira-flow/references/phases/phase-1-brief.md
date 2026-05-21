@@ -41,7 +41,7 @@ Leader executes directly, or delegates to `architect` only when Codex team/sub-a
 
 Leader / architect task:
 "Read {changes_path}/{spec_name}/proposal.md, generate design.md, and explore the related code architecture.
-  Database: Reference {root_path}/.codex/jira-flow/project-config.md → databases (query table structures to assist design). If only a migrated `.claude/project-config.md` exists, use it as read-only compatibility input.
+  Database: Reference {root_path}/.codex/jira-flow/project-config.md → databases (query table structures to assist design). If only a migrated legacy config exists, use it as read-only compatibility input.
 
   [superpowers:brainstorming — Design Principles]
   First read the superpowers brainstorming SKILL.md for the full methodology.
