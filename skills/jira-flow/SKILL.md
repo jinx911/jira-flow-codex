@@ -13,6 +13,8 @@ Run a Jira-driven development workflow in Codex-native runtime.
 
 Input examples:
 
+- `/jira-flow OA-3650`
+- `/jira-flow https://example.atlassian.net/browse/OA-3650`
 - `OA-3650`
 - `https://example.atlassian.net/browse/OA-3650`
 
@@ -26,6 +28,8 @@ Codex sub-agents may be used only when the user explicitly asks for sub-agents, 
 
 | Legacy concept | Codex equivalent |
 | --- | --- |
+| `/jira-flow <issue>` | `commands/jira-flow.md` shim that invokes this skill |
+| `/init-jira-flow [path]` | `commands/init-jira-flow.md` shim that invokes the init skill |
 | Workflow command | This skill |
 | Team creation command | `team-orchestration` reference workflow plus optional `spawn_agent` |
 | Message routing | `send_input` to an existing sub-agent when team mode is explicitly enabled |

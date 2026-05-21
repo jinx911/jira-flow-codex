@@ -18,6 +18,23 @@ cd /Users/eliojin/IdeaProjects/jira-flow-codex
 ```
 
 This links `skills/*` into `~/.codex/skills/`.
+It also links command shims into `~/.codex/commands/` and `~/.codex/workflows/`.
+
+## Usage
+
+Preferred:
+
+```text
+/init-jira-flow
+/jira-flow OA-3650
+```
+
+Fallback if custom slash commands are not loaded in the current Codex environment:
+
+```text
+Use init-jira-flow for the current project
+Use jira-flow for OA-3650
+```
 
 ## Layout
 
@@ -28,6 +45,8 @@ skills/jira-flow/references/roles/
 skills/init-jira-flow/SKILL.md
 skills/git-ops/SKILL.md
 skills/team-orchestration/SKILL.md
+commands/jira-flow.md
+commands/init-jira-flow.md
 ```
 
 ## Runtime Model

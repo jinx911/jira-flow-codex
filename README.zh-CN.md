@@ -19,6 +19,9 @@ Jira-Flow Codex 是从 Claude Code 版 `jira-flow` 独立拆出的 Codex 原生�
 ```text
 jira-flow-codex/
 ├── install-codex.sh
+├── commands/
+│   ├── init-jira-flow.md
+│   └── jira-flow.md
 ├── skills/
 │   ├── jira-flow/
 │   │   ├── SKILL.md
@@ -49,9 +52,24 @@ cd /Users/eliojin/IdeaProjects/jira-flow-codex
 
 ## 使用
 
+初始化当前项目：
+
+```text
+/init-jira-flow
+```
+
+处理 Jira issue：
+
 在 Codex 中触发：
 
 ```text
+/jira-flow OA-3650
+```
+
+如果当前 Codex 环境没有加载自定义 slash command，则使用等价触发语：
+
+```text
+使用 init-jira-flow 初始化当前项目
 使用 jira-flow 处理 OA-3650
 ```
 
@@ -61,5 +79,5 @@ cd /Users/eliojin/IdeaProjects/jira-flow-codex
 
 - 已迁移并适配 phase/gate/resume/team-rules。
 - 已迁移 agents 为 Codex role references。
-- 已新增 Codex 原生 skill 入口和安装脚本。
+- 已新增 Codex 原生 skill 入口、`/init-jira-flow` 与 `/jira-flow` command shim 和安装脚本。
 - 可安装到 `~/.codex/skills/` 后在 Codex 中使用。
