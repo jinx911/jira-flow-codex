@@ -11,7 +11,7 @@ description: Phase 1 complete instructions for requirements analysis. Leader rea
 Leader executes directly, or delegates to `requirements-analyst` only when the user explicitly enabled Codex team/sub-agent mode.
 
 Leader / requirements-analyst task:
-"Read Jira issue {key} via Codex Atlassian Rovo tools (including description, comments when available, and linked context),
+"Read Jira issue {issue_key} via Codex Atlassian Rovo tools (including description, comments when available, and linked context),
   analyze the requirements, and generate an OpenSpec proposal.md.
 
   Pre-cleanup: Run `find {changes_path} -type d -empty -delete` to remove residual empty directories.

@@ -12,7 +12,7 @@ At the end of each Phase, the Leader executes a Gate checkpoint:
 2. **Quality check**: Evaluate whether deliverables meet Gate pass criteria (see table below)
 3. **Present**: Display a structured summary to the user (see summary format)
 4. **Confirm** (semi-auto mode):
-   - User confirms → update {issue_key}-state.json, proceed to next Phase
+   - User confirms → update `{root_path}/.codex/jira-flow/state/{issue_key}.json`, proceed to next Phase
    - User requests changes → Leader forwards modification instructions to the relevant agent, re-run Gate after changes
    - User aborts → close spawned Codex sub-agents if any, save state, flow ends
 5. **Auto-pass** (full-auto mode): After quality check passes, log the summary to state and proceed directly to the next Phase; escalate to user when quality is insufficient

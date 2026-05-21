@@ -24,7 +24,7 @@ Location: `{root_path}/.codex/jira-flow/state/{issue_key}.json`
   "pending_tasks": ["task-id-2"],
   "gate_summaries": {
     "1": "proposal: xxx, design: xxx",
-    "2": "tasks: 12 total, branch: OA-3650"
+    "2": "tasks: 12 total, branch: PROJ-123"
   },
   "updated_at": "<ISO>"
 }

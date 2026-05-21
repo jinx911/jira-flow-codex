@@ -80,12 +80,12 @@ databases:
 
 ## Test Environments
 
-# Sensitive credentials — add to .gitignore or use env variables
+# Do not store credentials here. Reference environment variables or a secret manager.
 test_environments:
   default:
     url: "http://your-test-env.example.com"
-    account: ""   # Fill in your test account
-    password: ""  # Fill in your test password
+    account_env: "JIRA_FLOW_TEST_ACCOUNT"
+    password_env: "JIRA_FLOW_TEST_PASSWORD"
     desc: "Default test environment"
 
 ## E2E Testing
@@ -95,8 +95,8 @@ e2e_testing:
   login_template: |
     async (page) => {
       await page.goto('{url}/login');
-      await page.fill('input[name="email"]', '{account}');
-      await page.fill('input[type="password"]', '{password}');
+      await page.fill('input[name="email"]', process.env.JIRA_FLOW_TEST_ACCOUNT);
+      await page.fill('input[type="password"]', process.env.JIRA_FLOW_TEST_PASSWORD);
       await page.click('button:has-text("Login")');
       await page.waitForURL('**/dashboard', { timeout: 10000 });
       return { loggedIn: true };

@@ -13,10 +13,10 @@ Run a Jira-driven development workflow in Codex-native runtime.
 
 Input examples:
 
-- `/jira-flow OA-3650`
-- `/jira-flow https://example.atlassian.net/browse/OA-3650`
-- `OA-3650`
-- `https://example.atlassian.net/browse/OA-3650`
+- `/jira-flow PROJ-123`
+- `/jira-flow https://example.atlassian.net/browse/PROJ-123`
+- `PROJ-123`
+- `https://example.atlassian.net/browse/PROJ-123`
 
 ## Runtime Model
 
@@ -51,6 +51,28 @@ Read only what is needed for the current phase:
 - `references/phases/phase-5-brief.md`
 - `references/phases/phase-6-brief.md`
 
+## Variable Substitution
+
+Before entering a phase, substitute these variables in the phase brief:
+
+| Variable | Source |
+| --- | --- |
+| `{issue_key}` | Parsed Jira issue key, such as `PROJ-123` |
+| `{changes_path}` | Project config `openspec.changes_path` |
+| `{baseline_path}` | Project config `openspec.baseline_path` |
+| `{spec_name}` | Phase 1 proposal directory name |
+| `{branch}` | Phase 2 branch name |
+| `{repo_path}` | Primary implementation repository path |
+| `{backend_repo_path}` | Backend repository path |
+| `{frontend_repo_path}` | Frontend repository path |
+| `{repo_paths}` | All repositories involved in verification |
+| `{root_path}` | Project root path |
+| `{deploy_branch}` | Optional deploy branch from project config |
+
+## Superpowers References
+
+Phase briefs use `[superpowers:<skill-name>]` annotations. In Codex, these mean: read and follow the named superpowers skill if it is available in the current environment; otherwise follow the local phase constraints and note the missing skill in the Gate summary.
+
 ## Workflow
 
 ### Phase 0: Preflight
@@ -69,7 +91,7 @@ Use `references/phases/phase-1-brief.md` as the source procedure, translated to 
 
 Key Codex adjustments:
 
-- Fetch Jira data with `_getjiraissue` and comments/related context when available.
+- Fetch Jira data with the Codex Atlassian Rovo `mcp__codex_apps__atlassian_rovo._getjiraissue` tool and comments/related context when available.
 - Write OpenSpec files under the configured `openspec.changes_path`.
 - Use `superpowers:brainstorming` methodology for alternatives and self-review.
 
@@ -99,7 +121,7 @@ Use `references/phases/phase-4-brief.md`.
 Key Codex adjustments:
 
 - Default to Codex code review response format: findings first, severity ordered, exact file and line.
-- For OA projects, also apply `oa-review` when available.
+- Apply project-specific review rules when available.
 
 ### Phase 5: Verification
 
@@ -117,8 +139,8 @@ Use `references/phases/phase-6-brief.md`.
 
 Key Codex adjustments:
 
-- Use `oa-commit` if available for commit discipline.
-- Use Atlassian Rovo tools such as `_gettransitionsforjiraissue`, `_transitionjiraissue`, `_editjiraissue`, and `_addcommenttojiraissue`.
+- Use project-specific commit discipline when available.
+- Use Codex Atlassian Rovo tools such as `mcp__codex_apps__atlassian_rovo._gettransitionsforjiraissue`, `mcp__codex_apps__atlassian_rovo._transitionjiraissue`, `mcp__codex_apps__atlassian_rovo._editjiraissue`, and `mcp__codex_apps__atlassian_rovo._addcommenttojiraissue`.
 - Do not create merge requests unless the user explicitly asks.
 
 ## Gate Rules

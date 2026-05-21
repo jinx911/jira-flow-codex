@@ -67,5 +67,5 @@ if [ -d "$SCRIPT_DIR/commands" ]; then
   done
 fi
 
-printf 'Try: /jira-flow OA-3650\n'
-printf 'Fallback: 使用 jira-flow 处理 OA-3650\n'
+printf 'Try: /jira-flow PROJ-123\n'
+printf 'Fallback: 使用 jira-flow 处理 PROJ-123\n'

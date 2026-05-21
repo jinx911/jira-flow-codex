@@ -1,5 +1,5 @@
 ---
-description: "Run Jira-Flow Codex for a Jira issue"
+description: "Run Jira-Flow Codex for a Jira issue, for example PROJ-123"
 argument-hint: "<ISSUE-KEY | Jira URL>"
 ---
 

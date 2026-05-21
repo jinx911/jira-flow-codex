@@ -16,7 +16,7 @@ Use Codex sub-agents only when the user explicitly asks for sub-agents, delegati
 Role prompts live in:
 
 ```text
-skills/jira-flow/references/roles/
+skills/jira-flow/references/roles/<role-name>.md
 ```
 
 Core roles:
@@ -31,7 +31,7 @@ Core roles:
 
 ## Mapping
 
-- Read-only exploration: prefer `explorer`.
+- Read-only exploration: prefer Codex `explorer` agents and inject `skills/jira-flow/references/roles/code-explorer.md` when role guidance is useful.
 - Code changes or verification work: prefer `worker`.
 - Assign disjoint write scopes to workers.
 - Tell every worker they are not alone in the codebase and must not revert others' edits.

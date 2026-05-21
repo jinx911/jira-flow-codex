@@ -28,20 +28,20 @@ If deploy_branch is not configured → skip this step
 
 - All repository branches have been pushed
 - deploy_branch has been merged (if configured)
-- Update jira-flow-state.json
+- Update `{root_path}/.codex/jira-flow/state/{issue_key}.json`
 
 ## 4. Jira Wrap-Up
 
 Leader executes directly, or delegates to requirements-analyst only when Codex team/sub-agent mode is enabled:
 "Perform Jira wrap-up operations:
    Reference {root_path}/.codex/jira-flow/project-config.md → jira_workflow (if configured), otherwise discover dynamically via Codex Atlassian Rovo tools:
-   a. `_gettransitionsforjiraissue` to get the transition ID for the target status
+   a. `mcp__codex_apps__atlassian_rovo._gettransitionsforjiraissue` to get the transition ID for the target status
       → If jira_workflow.testing_status exists: use the configured value
       → If not configured: list available transitions and ask the Leader to select
-   b. Transition the main Jira issue to the target status with `_transitionjiraissue`
+   b. Transition the main Jira issue to the target status with `mcp__codex_apps__atlassian_rovo._transitionjiraissue`
    c. If jira_workflow.auto_creates_sub == true:
-      use `_searchjiraissuesusingjql` to search for auto-created sub-issues by parent
-   d. use `_editjiraissue` or `_addcommenttojiraissue` to fill in the testing notes (based on proposal summary + change scope + test results)
+      use `mcp__codex_apps__atlassian_rovo._searchjiraissuesusingjql` to search for auto-created sub-issues by parent
+   d. use `mcp__codex_apps__atlassian_rovo._editjiraissue` or `mcp__codex_apps__atlassian_rovo._addcommenttojiraissue` to fill in the testing notes (based on proposal summary + change scope + test results)
       → If jira_workflow.testing_note_template exists: use the template
       → If not configured: use default format (change overview, modules affected, testing highlights, prerequisites, verification steps)
    e. Transition sub-issues → jira_workflow.sub_completion_status"

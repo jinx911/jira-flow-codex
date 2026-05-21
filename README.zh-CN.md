@@ -1,5 +1,7 @@
 # Jira-Flow Codex
 
+**中文** | [English](README.md)
+
 Jira-Flow Codex 是从 Claude Code 版 `jira-flow` 独立拆出的 Codex 原生工作流项目。
 
 目标：从 Jira Issue 出发，在 Codex 中完成需求分析、方案设计、任务规划、TDD 开发、代码评审、测试验证、提交收尾和 Jira 更新。
@@ -44,7 +46,7 @@ jira-flow-codex/
 ## 安装
 
 ```bash
-cd /Users/eliojin/IdeaProjects/jira-flow-codex
+cd jira-flow-codex
 ./install-codex.sh
 ```
 
@@ -63,14 +65,14 @@ cd /Users/eliojin/IdeaProjects/jira-flow-codex
 在 Codex 中触发：
 
 ```text
-/jira-flow OA-3650
+/jira-flow PROJ-123
 ```
 
 如果当前 Codex 环境没有加载自定义 slash command，则使用等价触发语：
 
 ```text
 使用 init-jira-flow 初始化当前项目
-使用 jira-flow 处理 OA-3650
+使用 jira-flow 处理 PROJ-123
 ```
 
 默认使用单会话阶段化执行。只有当用户明确要求“用子代理团队/并行 agent”时，Codex 版才启用 sub-agent 团队模式。
@@ -81,3 +83,7 @@ cd /Users/eliojin/IdeaProjects/jira-flow-codex
 - 已迁移 agents 为 Codex role references。
 - 已新增 Codex 原生 skill 入口、`/init-jira-flow` 与 `/jira-flow` command shim 和安装脚本。
 - 可安装到 `~/.codex/skills/` 后在 Codex 中使用。
+
+## 迁移说明
+
+从 `.claude/` 迁移到 `.codex/` 的说明见 [docs/migration-from-claude.md](docs/migration-from-claude.md)。

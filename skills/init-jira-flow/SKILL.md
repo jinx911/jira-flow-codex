@@ -14,7 +14,7 @@ Initialize a project for the Codex version of Jira-Flow.
 Input examples:
 
 - `/init-jira-flow`
-- `/init-jira-flow /Users/eliojin/IdeaProjects/oa/oa-platform`
+- `/init-jira-flow /path/to/project`
 - `init-jira-flow 当前项目`
 
 ## Outputs

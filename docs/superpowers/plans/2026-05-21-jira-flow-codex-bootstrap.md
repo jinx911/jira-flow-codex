@@ -13,17 +13,17 @@
 ### Task 1: Bootstrap Project
 
 **Files:**
-- Create: `/Users/eliojin/IdeaProjects/jira-flow-codex/README.md`
-- Create: `/Users/eliojin/IdeaProjects/jira-flow-codex/README.zh-CN.md`
-- Create: `/Users/eliojin/IdeaProjects/jira-flow-codex/install-codex.sh`
-- Create: `/Users/eliojin/IdeaProjects/jira-flow-codex/skills/jira-flow/SKILL.md`
-- Create: `/Users/eliojin/IdeaProjects/jira-flow-codex/skills/init-jira-flow/SKILL.md`
-- Create: `/Users/eliojin/IdeaProjects/jira-flow-codex/skills/git-ops/SKILL.md`
-- Create: `/Users/eliojin/IdeaProjects/jira-flow-codex/skills/team-orchestration/SKILL.md`
+- Create: `<repo>/README.md`
+- Create: `<repo>/README.zh-CN.md`
+- Create: `<repo>/install-codex.sh`
+- Create: `<repo>/skills/jira-flow/SKILL.md`
+- Create: `<repo>/skills/init-jira-flow/SKILL.md`
+- Create: `<repo>/skills/git-ops/SKILL.md`
+- Create: `<repo>/skills/team-orchestration/SKILL.md`
 
 - [ ] **Step 1: Create directory skeleton**
 
-Run: `mkdir -p /Users/eliojin/IdeaProjects/jira-flow-codex/skills/jira-flow/references/{phases,roles}`
+Run: `mkdir -p <repo>/skills/jira-flow/references/{phases,roles}`
 Expected: directory exists.
 
 - [ ] **Step 2: Copy workflow references**
@@ -43,5 +43,5 @@ Expected: installer does not touch `~/.claude`.
 
 - [ ] **Step 5: Verify structure**
 
-Run: `find /Users/eliojin/IdeaProjects/jira-flow-codex -maxdepth 4 -type f | sort`
+Run: `find <repo> -maxdepth 4 -type f | sort`
 Expected: README, installer, skill entrypoints, references, and role prompts are listed.
