@@ -1,6 +1,16 @@
 .DS_Store
 .codex/
 .claude/
+.env
+.env.*
+!.env.example
 node_modules/
 vendor/
 *.log
+dist/
+build/
+coverage/
+.idea/
+.vscode/
+tmp/
+temp/

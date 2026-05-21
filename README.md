@@ -68,3 +68,7 @@ commands/init-jira-flow.md
 ## Migration
 
 See [docs/migration-from-legacy.md](docs/migration-from-legacy.md) for legacy-to-Codex migration notes.
+
+## License
+
+MIT. See [LICENSE](LICENSE).

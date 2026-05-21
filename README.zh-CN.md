@@ -87,3 +87,7 @@ cd jira-flow-codex
 ## 迁移说明
 
 旧版配置迁移说明见 [docs/migration-from-legacy.md](docs/migration-from-legacy.md)。
+
+## 许可证
+
+MIT。详见 [LICENSE](LICENSE)。
