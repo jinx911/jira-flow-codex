@@ -34,17 +34,38 @@ If deploy_branch is not configured → skip this step
 
 Leader executes directly, or delegates to requirements-analyst only when Codex team/sub-agent mode is enabled:
 "Perform Jira wrap-up operations:
-   Reference {root_path}/.codex/jira-flow/project-config.md → jira_workflow (if configured), otherwise discover dynamically via Codex Atlassian Rovo tools:
-   a. `mcp__codex_apps__atlassian_rovo._gettransitionsforjiraissue` to get the transition ID for the target status
-      → If jira_workflow.testing_status exists: use the configured value
-      → If not configured: list available transitions and ask the Leader to select
-   b. Transition the main Jira issue to the target status with `mcp__codex_apps__atlassian_rovo._transitionjiraissue`
-   c. If jira_workflow.auto_creates_sub == true:
-      use `mcp__codex_apps__atlassian_rovo._searchjiraissuesusingjql` to search for auto-created sub-issues by parent
-   d. use `mcp__codex_apps__atlassian_rovo._editjiraissue` or `mcp__codex_apps__atlassian_rovo._addcommenttojiraissue` to fill in the testing notes (based on proposal summary + change scope + test results)
-      → If jira_workflow.testing_note_template exists: use the template
-      → If not configured: use default format (change overview, modules affected, testing highlights, prerequisites, verification steps)
-   e. Transition sub-issues → jira_workflow.sub_completion_status"
+   Reference {root_path}/.codex/jira-flow/project-config.md → jira_workflow if configured.
+   If jira_workflow is not configured, use these defaults:
+   - testing_status: auto-detect a transition/status containing 'Test' or '测试'
+   - auto_creates_sub: true
+   - sub_completion_status: auto-detect a transition/status containing 'Done' or '完成'
+   - testing_note_template: built-in 5-field template: Change overview, Affected modules, Testing highlights, Prerequisites, Verification steps
+
+   a. `mcp__codex_apps__atlassian_rovo._gettransitionsforjiraissue` → find the transition ID for the main issue testing status.
+      Configured: use jira_workflow.testing_status.
+      Default: choose the available transition/status containing 'Test' or '测试'. If there are multiple plausible matches, ask the user to choose.
+
+   b. Transition the MAIN Jira issue to the testing status with `mcp__codex_apps__atlassian_rovo._transitionjiraissue`.
+      Important: this transition may trigger automatic creation of testing sub-issues. Wait briefly for auto-creation to complete before searching.
+
+   c. If jira_workflow.auto_creates_sub is omitted or true:
+      use `mcp__codex_apps__atlassian_rovo._searchjiraissuesusingjql` with:
+      `parent = {issue_key} ORDER BY created DESC`
+      Record each sub-issue key/link for the Gate 6 summary.
+
+   d. Fill testing notes on EACH SUB-ISSUE, not the main issue, using `mcp__codex_apps__atlassian_rovo._editjiraissue` when the testing note field is known, otherwise `mcp__codex_apps__atlassian_rovo._addcommenttojiraissue`.
+      Content source: proposal summary + change scope + test results.
+      Configured: use jira_workflow.testing_note_template.
+      Default:
+        - Change overview: <summary of changes>
+        - Affected modules: <modules involved>
+        - Testing highlights: <key test results>
+        - Prerequisites: <what needs to be set up before testing>
+        - Verification steps: <how to verify the changes>
+
+   e. Transition EACH SUB-ISSUE to completion status.
+      Configured: use jira_workflow.sub_completion_status.
+      Default: choose the available transition/status containing 'Done' or '完成'. If there are multiple plausible matches, ask the user to choose."
 
 ## 5. Cleanup
 

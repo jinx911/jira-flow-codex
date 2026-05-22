@@ -84,6 +84,10 @@ Phase briefs use `[superpowers:<skill-name>]` annotations. In Codex, these mean:
 3. Verify Atlassian Rovo availability using the current Codex Atlassian tools.
 4. Detect an existing state file at `<project-root>/.codex/jira-flow/state/{issue_key}.json`.
 5. Ask the user before enabling sub-agent/team mode unless they already requested it explicitly.
+6. Check whether `.codegraph/` exists under `{root_path}`:
+   - Exists: use CodeGraph guidance from `references/team-rules.md` for code exploration.
+   - Missing: ask whether to initialize CodeGraph if the environment has `codegraph`; otherwise continue with standard `rg` and file reads.
+   - Declined or unavailable: continue without CodeGraph and note it in the Gate summary only if it affects exploration confidence.
 
 ### Phase 1: Requirements + Design
 
@@ -113,6 +117,7 @@ Key Codex adjustments:
 - Use `superpowers:test-driven-development` before implementation.
 - Preserve user changes and never reset or revert unrelated work.
 - Use worktrees only when the task requires isolation and the user approves the path.
+- Track long-running progress in the state file so interrupted or context-exhausted work can resume without restarting completed steps.
 
 ### Phase 4: Code Review
 
@@ -141,6 +146,7 @@ Key Codex adjustments:
 
 - Use project-specific commit discipline when available.
 - Use Codex Atlassian Rovo tools such as `mcp__codex_apps__atlassian_rovo._gettransitionsforjiraissue`, `mcp__codex_apps__atlassian_rovo._transitionjiraissue`, `mcp__codex_apps__atlassian_rovo._editjiraissue`, and `mcp__codex_apps__atlassian_rovo._addcommenttojiraissue`.
+- Preserve the Jira wrap-up order: transition the main issue first, discover auto-created sub-issues, fill testing notes on sub-issues, then complete sub-issues.
 - Do not create merge requests unless the user explicitly asks.
 
 ## Gate Rules

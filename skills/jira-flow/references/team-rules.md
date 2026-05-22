@@ -52,6 +52,33 @@ You are a member of the jira-flow-<issue-key> team.
 - Send a completion message to the Leader
 - If a build fails, attempt to self-fix (up to 2 times); if still failing, notify the Leader
 
+### Message Format (Context Protection)
+- **Completion Report** — When finishing a task or sub-task, report to the Leader using this exact format:
+  ```
+  ## Task Completion Report
+
+  **Status**: completed | failed | blocked
+  **Summary**: <=3 sentences describing the result
+  **Files Changed**: [file list, max 10]
+  **Test Result**: pass/fail/N/A + key command evidence
+  **Issues**: [blocker descriptions, or "None"]
+  ```
+  - Never include code snippets, diffs, or full file contents in reports.
+  - The Leader can read files directly when details are needed.
+  - Phase 1-2 deliverables are file-based; report file paths plus concise summaries.
+
+- **Progress Update** — When work is expected to take more than 3 minutes, report briefly after each sub-step:
+  ```
+  ## Progress Update
+
+  **Task**: [current task name]
+  **Step**: [current step] / [total steps]
+  **Status**: in_progress
+  **ETA**: [estimated remaining time or "unknown"]
+  ```
+  - The Leader stores progress in `agent_context_snapshots` so replacement or resumed work can continue from the latest known point.
+  - Missing progress updates can cause the Leader to treat the worker as possibly context-exhausted.
+
 ### Exception Escalation (full chain via Leader)
 When you discover an issue:
   1. Assess the nature of the problem
@@ -90,4 +117,13 @@ Role-specific config: The Leader will pass any config you need (database/migrati
   Full project config: {root_path}/.codex/jira-flow/project-config.md (read to get role-specific info)
   Migrated compatibility config, if present: project-level legacy config (read-only fallback)
   jira-flow process config: ~/.codex/skills/jira-flow/SKILL.md and references
+
+CodeGraph (if `.codegraph/` exists in {root_path} and tools are available):
+  Prefer CodeGraph for code exploration before broad text search:
+  - codegraph_search: Find symbols by name
+  - codegraph_callers / codegraph_callees: Trace call flow
+  - codegraph_impact: Check affected code before editing
+  - codegraph_context: Build focused context for exploration tasks
+  - codegraph_node: Inspect a single symbol
+  If CodeGraph is missing or stale, fall back to `rg`, `rg --files`, and targeted file reads.
 ```

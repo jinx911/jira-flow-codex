@@ -14,3 +14,6 @@ coverage/
 .vscode/
 tmp/
 temp/
+
+# Superpowers working files (specs, plans generated during brainstorming/planning)
+docs/superpowers/

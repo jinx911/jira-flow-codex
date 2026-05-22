@@ -10,12 +10,21 @@ At the end of each Phase, the Leader executes a Gate checkpoint:
 
 1. **Collect**: Aggregate all agent reports from the current Phase
 2. **Quality check**: Evaluate whether deliverables meet Gate pass criteria (see table below)
-3. **Present**: Display a structured summary to the user (see summary format)
-4. **Confirm** (semi-auto mode):
-   - User confirms → update `{root_path}/.codex/jira-flow/state/{issue_key}.json`, proceed to next Phase
+3. **Persist**: Write Gate results to `{root_path}/.codex/jira-flow/state/{issue_key}.json`:
+   - `gate_summaries[current_phase]` = the Gate Summary text
+   - `phase_decisions[current_phase]` = extracted key decisions:
+     - `scope`: From the phase summary, <=1 sentence
+     - `key_files`: From changed or planned files, <=10 files
+     - `architecture_choice`: Core decision from design.md or architecture summary for Phase 1-2; omit for Phase 3-6
+     - `risks`: From the Gate Summary Risks section, if any
+   - `current_phase` = next phase number
+   - `updated_at` = current ISO timestamp
+4. **Present**: Display a structured summary to the user (see summary format)
+5. **Confirm** (semi-auto mode):
+   - User confirms → proceed to next Phase; compact or summarize conversation context when useful, then restore from state if needed
    - User requests changes → Leader forwards modification instructions to the relevant agent, re-run Gate after changes
    - User aborts → close spawned Codex sub-agents if any, save state, flow ends
-5. **Auto-pass** (full-auto mode): After quality check passes, log the summary to state and proceed directly to the next Phase; escalate to user when quality is insufficient
+6. **Auto-pass** (full-auto mode): After quality check + persist, proceed directly to the next Phase; escalate to user when quality is insufficient
 
 ## Gate Pass Criteria
 
