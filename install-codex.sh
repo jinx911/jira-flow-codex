@@ -4,6 +4,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 CODEX_DIR="${CODEX_HOME:-$HOME/.codex}"
 SKILLS_DIR="$CODEX_DIR/skills"
+AGENTS_SKILLS_DIR="$HOME/.agents/skills"
 COMMANDS_DIR="$CODEX_DIR/commands"
 WORKFLOWS_DIR="$CODEX_DIR/workflows"
 
@@ -24,14 +25,13 @@ preflight() {
     warn "Codex skills directory not found; it will be created."
   fi
 
-  if [ -d "$HOME/.agents/skills" ]; then
-    info "Native skills directory found: $HOME/.agents/skills"
+  if [ -d "$AGENTS_SKILLS_DIR" ]; then
+    info "Native skills directory found: $AGENTS_SKILLS_DIR"
   else
-    warn "Native skills directory not found: $HOME/.agents/skills"
-    warn "This installer links into $CODEX_DIR/skills; if your Codex build only scans ~/.agents/skills, add a symlink manually."
+    warn "Native skills directory not found: $AGENTS_SKILLS_DIR; it will be created."
   fi
 
-  if [ -d "$CODEX_DIR/superpowers/skills" ] || [ -d "$CODEX_DIR/skills/superpowers" ] || [ -d "$HOME/.agents/skills/superpowers" ]; then
+  if [ -d "$CODEX_DIR/superpowers/skills" ] || [ -d "$CODEX_DIR/skills/superpowers" ] || [ -d "$AGENTS_SKILLS_DIR/superpowers" ]; then
     info "Superpowers skills detected"
   else
     warn "Superpowers skills not detected. Jira-Flow can install, but phase methodology annotations may be less effective."
@@ -53,8 +53,10 @@ preflight() {
 preflight
 
 mkdir -p "$SKILLS_DIR"
+mkdir -p "$AGENTS_SKILLS_DIR"
 
 count=0
+native_count=0
 for skill_dir in "$SCRIPT_DIR"/skills/*; do
   [ -d "$skill_dir" ] || continue
   name="$(basename "$skill_dir")"
@@ -70,9 +72,22 @@ for skill_dir in "$SCRIPT_DIR"/skills/*; do
   ln -s "$skill_dir" "$target"
   info "Linked Codex skill: $name"
   count=$((count + 1))
+
+  native_target="$AGENTS_SKILLS_DIR/$name"
+  if [ -L "$native_target" ]; then
+    rm "$native_target"
+  elif [ -e "$native_target" ]; then
+    warn "Skipping existing non-symlink native skill: $native_target"
+    continue
+  fi
+
+  ln -s "$skill_dir" "$native_target"
+  info "Linked native skill: $name"
+  native_count=$((native_count + 1))
 done
 
 printf '\nJira-Flow Codex installed: %s skill(s) linked to %s\n' "$count" "$SKILLS_DIR"
+printf 'Native discovery: %s skill(s) linked to %s\n' "$native_count" "$AGENTS_SKILLS_DIR"
 
 if [ -d "$SCRIPT_DIR/commands" ]; then
   mkdir -p "$COMMANDS_DIR" "$WORKFLOWS_DIR"
