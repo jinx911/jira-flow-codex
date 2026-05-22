@@ -10,6 +10,48 @@ WORKFLOWS_DIR="$CODEX_DIR/workflows"
 info() { printf '[INFO] %s\n' "$1"; }
 warn() { printf '[WARN] %s\n' "$1"; }
 
+preflight() {
+  info "Running preflight checks"
+
+  if [ ! -d "$CODEX_DIR" ]; then
+    warn "Codex home not found: $CODEX_DIR"
+    warn "Run Codex once before relying on automatic discovery."
+  fi
+
+  if [ -d "$CODEX_DIR/skills" ]; then
+    info "Codex skills directory found: $CODEX_DIR/skills"
+  else
+    warn "Codex skills directory not found; it will be created."
+  fi
+
+  if [ -d "$HOME/.agents/skills" ]; then
+    info "Native skills directory found: $HOME/.agents/skills"
+  else
+    warn "Native skills directory not found: $HOME/.agents/skills"
+    warn "This installer links into $CODEX_DIR/skills; if your Codex build only scans ~/.agents/skills, add a symlink manually."
+  fi
+
+  if [ -d "$CODEX_DIR/superpowers/skills" ] || [ -d "$CODEX_DIR/skills/superpowers" ] || [ -d "$HOME/.agents/skills/superpowers" ]; then
+    info "Superpowers skills detected"
+  else
+    warn "Superpowers skills not detected. Jira-Flow can install, but phase methodology annotations may be less effective."
+  fi
+
+  if [ -d "$CODEX_DIR/plugins/cache/openai-curated/atlassian-rovo" ] || [ -d "$CODEX_DIR/plugins/cache/openai-curated" ]; then
+    info "Codex plugin cache found; verify Atlassian Rovo is enabled before running /jira-flow"
+  else
+    warn "Codex plugin cache not found. Atlassian Rovo may be unavailable until configured."
+  fi
+
+  if [ -d "$CODEX_DIR/commands" ] || [ -d "$CODEX_DIR/workflows" ]; then
+    info "Command/workflow directory detected"
+  else
+    warn "Command/workflow directories not found; they will be created as compatibility shims."
+  fi
+}
+
+preflight
+
 mkdir -p "$SKILLS_DIR"
 
 count=0
