@@ -25,7 +25,12 @@ description: Phase 3 complete instructions for TDD development. Leader reads thi
     Frontend development: Reference {root_path}/.codex/jira-flow/project-config.md → build_commands.frontend (must build after changes to take effect).
     If multiple development agents need to modify the same repository → use worktree isolation only after confirming the isolation path and write scopes.
     If issues arise, follow the escalation path defined in team-rules.md."
-3. Leader monitors: on completion report → update plan/state + notify waiting agents if any; on exception → handle per exception protocol
+3. Leader monitors:
+   - On progress update → write `agent_context_snapshots[role]` in `{root_path}/.codex/jira-flow/state/{issue_key}.json`
+   - On completion report → update plan/state, task lists, and notify waiting agents if any
+   - On exception → handle per exception protocol
+   - On no message for 10 minutes → ping once
+   - On ping unanswered and 15 minutes since the last progress snapshot → use context exhaustion recovery from `references/resume.md`
 
 ## Frontend-Backend Parallel Conflict Coordination
 
