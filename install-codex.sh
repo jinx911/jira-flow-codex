@@ -106,8 +106,8 @@ if [ -d "$SCRIPT_DIR/commands" ]; then
     fi
 
     if [ -n "$command_target" ]; then
-      ln -s "$command_file" "$command_target"
-      info "Linked command shim: ${name%.md}"
+      cp "$command_file" "$command_target"
+      info "Installed command shim: ${name%.md}"
     fi
 
     if [ -L "$workflow_target" ]; then
@@ -118,8 +118,8 @@ if [ -d "$SCRIPT_DIR/commands" ]; then
     fi
 
     if [ -n "$workflow_target" ]; then
-      ln -s "$command_file" "$workflow_target"
-      info "Linked workflow shim: ${name%.md}"
+      cp "$command_file" "$workflow_target"
+      info "Installed workflow shim: ${name%.md}"
     fi
   done
 fi
