@@ -98,29 +98,13 @@ if [ -d "$SCRIPT_DIR/commands" ]; then
     command_target="$COMMANDS_DIR/$name"
     workflow_target="$WORKFLOWS_DIR/$name"
 
-    if [ -L "$command_target" ]; then
-      rm "$command_target"
-    elif [ -e "$command_target" ]; then
-      warn "Skipping existing non-symlink command: $command_target"
-      command_target=""
-    fi
+    rm -f "$command_target"
+    cp "$command_file" "$command_target"
+    info "Installed command shim: ${name%.md}"
 
-    if [ -n "$command_target" ]; then
-      cp "$command_file" "$command_target"
-      info "Installed command shim: ${name%.md}"
-    fi
-
-    if [ -L "$workflow_target" ]; then
-      rm "$workflow_target"
-    elif [ -e "$workflow_target" ]; then
-      warn "Skipping existing non-symlink workflow: $workflow_target"
-      workflow_target=""
-    fi
-
-    if [ -n "$workflow_target" ]; then
-      cp "$command_file" "$workflow_target"
-      info "Installed workflow shim: ${name%.md}"
-    fi
+    rm -f "$workflow_target"
+    cp "$command_file" "$workflow_target"
+    info "Installed workflow shim: ${name%.md}"
   done
 fi
 

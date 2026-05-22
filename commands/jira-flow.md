@@ -1,6 +1,6 @@
 ---
 description: "Run Jira-Flow Codex for a Jira issue, for example PROJ-123"
-argument-hint: "<ISSUE-KEY | Jira URL>"
+argument-hint: "[issue key or Jira URL]"
 ---
 
 Use the `jira-flow` skill with these arguments:
