@@ -14,8 +14,6 @@ Leader / requirements-analyst task:
 "Read Jira issue {issue_key} via Codex Atlassian Rovo tools (including description, comments when available, and linked context),
   analyze the requirements, and generate an OpenSpec proposal.md.
 
-  Pre-cleanup: Run `find {changes_path} -type d -empty -delete` to remove residual empty directories.
-
   [superpowers:brainstorming]
   First read the superpowers brainstorming SKILL.md for the full methodology.
   Key constraints:

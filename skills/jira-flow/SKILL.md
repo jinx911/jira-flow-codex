@@ -1,6 +1,6 @@
 ---
 name: jira-flow
-description: Use when the user provides a Jira issue key or URL and wants Codex to run the full development lifecycle: requirements, design, planning, TDD implementation, review, verification, finalization, and Jira updates.
+description: "Use when the user provides a Jira issue key or URL and wants Codex to run the full development lifecycle: requirements, design, planning, TDD implementation, review, verification, finalization, and Jira updates."
 version: 0.1.0
 tags: [jira, codex, workflow, tdd, code-review, atlassian-rovo]
 ---
