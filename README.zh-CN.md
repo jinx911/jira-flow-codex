@@ -23,7 +23,8 @@ jira-flow-codex/
 ├── install-codex.sh
 ├── commands/
 │   ├── init-jira-flow.md
-│   └── jira-flow.md
+│   ├── jira-flow.md
+│   └── jira-flow-team.md
 ├── skills/
 │   ├── jira-flow/
 │   │   ├── SKILL.md
@@ -66,6 +67,7 @@ cd jira-flow-codex
 
 ```text
 /jira-flow PROJ-123
+/jira-flow-team PROJ-123
 ```
 
 如果当前 Codex 环境没有加载自定义 slash command，则使用等价触发语：
@@ -73,15 +75,16 @@ cd jira-flow-codex
 ```text
 使用 init-jira-flow 初始化当前项目
 使用 jira-flow 处理 PROJ-123
+使用 jira-flow 处理 PROJ-123，并启用 Codex sub-agents team 模式
 ```
 
-默认使用单会话阶段化执行。只有当用户明确要求“用子代理团队/并行 agent”时，Codex 版才启用 sub-agent 团队模式。
+默认使用单会话阶段化执行。使用 `/jira-flow-team` 时，Codex 版会显式启用 sub-agent 团队模式：主会话作为 Leader 负责 Gate、状态文件、冲突协调和最终 Jira 更新，适合拆分的探索、实现、评审和验证任务可委派给 `explorer` 或 `worker` sub-agent。
 
 ## 当前状态
 
 - 已迁移并适配 phase/gate/resume/team-rules。
 - 已迁移 agents 为 Codex role references。
-- 已新增 Codex 原生 skill 入口、`/init-jira-flow` 与 `/jira-flow` command shim 和安装脚本。
+- 已新增 Codex 原生 skill 入口、`/init-jira-flow`、`/jira-flow`、`/jira-flow-team` command shim 和安装脚本。
 - 可安装到 `~/.codex/skills/` 后在 Codex 中使用。
 
 ## 迁移说明

@@ -15,6 +15,7 @@ Input examples:
 
 - `/jira-flow PROJ-123`
 - `/jira-flow https://example.atlassian.net/browse/PROJ-123`
+- `/jira-flow-team PROJ-123`
 - `PROJ-123`
 - `https://example.atlassian.net/browse/PROJ-123`
 
@@ -29,6 +30,7 @@ Codex sub-agents may be used only when the user explicitly asks for sub-agents, 
 | Legacy concept | Codex equivalent |
 | --- | --- |
 | `/jira-flow <issue>` | `commands/jira-flow.md` shim that invokes this skill |
+| `/jira-flow-team <issue>` | `commands/jira-flow-team.md` shim that invokes this skill with explicit Codex sub-agent team mode |
 | `/init-jira-flow [path]` | `commands/init-jira-flow.md` shim that invokes the init skill |
 | Workflow command | This skill |
 | Team creation command | `team-orchestration` reference workflow plus optional `spawn_agent` |
