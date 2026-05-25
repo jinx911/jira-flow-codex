@@ -37,6 +37,7 @@ Preferred:
 ```text
 /init-jira-flow
 /jira-flow PROJ-123
+/jira-flow-team PROJ-123
 ```
 
 Fallback if custom slash commands are not loaded in the current Codex environment:
@@ -44,7 +45,10 @@ Fallback if custom slash commands are not loaded in the current Codex environmen
 ```text
 Use init-jira-flow for the current project
 Use jira-flow for PROJ-123
+Use jira-flow for PROJ-123 with Codex sub-agents team mode
 ```
+
+Use `/jira-flow` for the default single-session workflow. Use `/jira-flow-team` when you want Codex to explicitly enable sub-agents: the main session remains Leader, while bounded exploration, implementation, review, or verification work can be delegated to `explorer` or `worker` sub-agents.
 
 ## Layout
 
@@ -56,6 +60,7 @@ skills/init-jira-flow/SKILL.md
 skills/git-ops/SKILL.md
 skills/team-orchestration/SKILL.md
 commands/jira-flow.md
+commands/jira-flow-team.md
 commands/init-jira-flow.md
 ```
 

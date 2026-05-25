@@ -109,4 +109,5 @@ if [ -d "$SCRIPT_DIR/commands" ]; then
 fi
 
 printf 'Try: /jira-flow PROJ-123\n'
+printf 'Team mode: /jira-flow-team PROJ-123\n'
 printf 'Fallback: 使用 jira-flow 处理 PROJ-123\n'
