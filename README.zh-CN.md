@@ -1,95 +1,81 @@
-# Jira-Flow Codex
-
 **中文** | [English](README.md)
 
-Jira-Flow Codex 是独立的 Codex 原生工作流项目。
+# Dev-Flow Codex
 
-目标：从 Jira Issue 出发，在 Codex 中完成需求分析、方案设计、任务规划、TDD 开发、代码评审、测试验证、提交收尾和 Jira 更新。
+这是一个 Codex 原生的 `dev-flow` 工作流仓库。
 
-## Codex 版设计
-
-| 能力 | Codex 版 |
-| --- | --- |
-| Skill 入口 | `~/.codex/skills/*/SKILL.md` |
-| 角色定义 | `skills/jira-flow/references/roles/*.md` |
-| 团队编排 | Codex 主会话 + 可选 sub-agent |
-| Jira 工具 | Codex Atlassian Rovo 工具 |
-| 权限模型 | Codex sandbox + escalation approval |
-
-## 项目结构
+它把原本的 `jira-flow-codex` 对齐到新的 `dev-flow` 架构：
 
 ```text
-jira-flow-codex/
-├── install-codex.sh
-├── commands/
-│   ├── init-jira-flow.md
-│   ├── jira-flow.md
-│   └── jira-flow-team.md
-├── skills/
-│   ├── jira-flow/
-│   │   ├── SKILL.md
-│   │   └── references/
-│   │       ├── gate.md
-│   │       ├── resume.md
-│   │       ├── team-rules.md
-│   │       ├── project-config.example.md
-│   │       ├── phases/
-│   │       └── roles/
-│   ├── init-jira-flow/
-│   │   └── SKILL.md
-│   ├── git-ops/
-│   │   └── SKILL.md
-│   └── team-orchestration/
-│       └── SKILL.md
-└── docs/
+需求（Jira key 或自然语言） -> 4 个 Stage + 4 个 Gate -> 分支推送 + Jira 收尾
+
+Stage 1: 需求     (spec-author) -> proposal.md + design.md
+Stage 2: 开发     (dev-loop)    -> tasks.md + 分支 + 实现
+Stage 3: 审查测试 (review-test) -> 审查 + 验证 + 修复环
+Stage 4: 收尾     (ship)        -> 推送 + 可选部署 + Jira 收尾
 ```
+
+## 架构
+
+- `skills/dev-flow/` 是薄编排器。
+- `spec-author`、`dev-loop`、`review-test`、`ship` 是可独立调用的阶段子 skill。
+- `init-dev-flow`、`create-team`、`delete-team`、`git-ops` 提供初始化和支撑能力。
+- `agents/` 存放可选角色提示文件；主流程不依赖这些 agent 文件。
+
+## Codex 差异
+
+本仓库遵循新的 `dev-flow` 结构，但保留 Codex 环境的安装与运行差异：
+
+- skills 安装到 `~/.codex/skills/`
+- command shim 安装到 `~/.codex/commands/` 和 `~/.codex/workflows/`
+- 同时链接到 `~/.agents/skills/`，增强 native discovery
+- 运行时配置放在 `~/.codex/configs/dev-flow/`，不要写进符号链接出去的 skill 目录
+- Jira 操作预期通过 Codex 的 Atlassian Rovo 工具链执行
 
 ## 安装
 
 ```bash
 cd jira-flow-codex
-./install-codex.sh
+chmod +x install.sh uninstall.sh
+./install.sh
 ```
-
-安装脚本会把 `skills/*` 链接到 `~/.codex/skills/`，并安装 slash command shim。
 
 ## 使用
 
-初始化当前项目：
+推荐命令：
 
 ```text
-/init-jira-flow
+/init-dev-flow
+/dev-flow PROJ-123
 ```
 
-处理 Jira issue：
-
-在 Codex 中触发：
+如果当前 Codex 环境没有加载自定义 slash command，可使用等价表达：
 
 ```text
-/jira-flow PROJ-123
-/jira-flow-team PROJ-123
+使用 init-dev-flow 初始化当前项目
+使用 dev-flow 处理 PROJ-123
 ```
 
-如果当前 Codex 环境没有加载自定义 slash command，则使用等价触发语：
+## 目录结构
 
 ```text
-使用 init-jira-flow 初始化当前项目
-使用 jira-flow 处理 PROJ-123
-使用 jira-flow 处理 PROJ-123，并启用 Codex sub-agents team 模式
+skills/dev-flow/
+skills/spec-author/
+skills/dev-loop/
+skills/review-test/
+skills/ship/
+skills/init-dev-flow/
+skills/create-team/
+skills/delete-team/
+skills/git-ops/
+agents/
+commands/dev-flow.md
+commands/init-dev-flow.md
 ```
-
-默认使用单会话阶段化执行。使用 `/jira-flow-team` 时，Codex 版会显式启用 sub-agent 团队模式：主会话作为 Leader 负责 Gate、状态文件、冲突协调和最终 Jira 更新，适合拆分的探索、实现、评审和验证任务可委派给 `explorer` 或 `worker` sub-agent。
-
-## 当前状态
-
-- 已迁移并适配 phase/gate/resume/team-rules。
-- 已迁移 agents 为 Codex role references。
-- 已新增 Codex 原生 skill 入口、`/init-jira-flow`、`/jira-flow`、`/jira-flow-team` command shim 和安装脚本。
-- 可安装到 `~/.codex/skills/` 后在 Codex 中使用。
 
 ## 迁移说明
 
-旧版配置迁移说明见 [docs/migration-from-legacy.md](docs/migration-from-legacy.md)。
+旧版 `jira-flow` 到新 `dev-flow` 体系的迁移说明见 [docs/migration-from-legacy.md](docs/migration-from-legacy.md)。
 
 ## 许可证
 

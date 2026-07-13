@@ -34,28 +34,21 @@ preflight() {
   if [ -d "$CODEX_DIR/superpowers/skills" ] || [ -d "$CODEX_DIR/skills/superpowers" ] || [ -d "$AGENTS_SKILLS_DIR/superpowers" ]; then
     info "Superpowers skills detected"
   else
-    warn "Superpowers skills not detected. Jira-Flow can install, but phase methodology annotations may be less effective."
+    warn "Superpowers skills not detected. Dev-Flow can install, but methodology annotations may be less effective."
   fi
 
   if [ -d "$CODEX_DIR/plugins/cache/openai-curated/atlassian-rovo" ] || [ -d "$CODEX_DIR/plugins/cache/openai-curated" ]; then
-    info "Codex plugin cache found; verify Atlassian Rovo is enabled before running /jira-flow"
+    info "Codex plugin cache found; verify Atlassian Rovo is enabled before running /dev-flow"
   else
     warn "Codex plugin cache not found. Atlassian Rovo may be unavailable until configured."
-  fi
-
-  if [ -d "$CODEX_DIR/commands" ] || [ -d "$CODEX_DIR/workflows" ]; then
-    info "Command/workflow directory detected"
-  else
-    warn "Command/workflow directories not found; they will be created as compatibility shims."
   fi
 }
 
 preflight
 
-mkdir -p "$SKILLS_DIR"
-mkdir -p "$AGENTS_SKILLS_DIR"
+mkdir -p "$SKILLS_DIR" "$AGENTS_SKILLS_DIR" "$COMMANDS_DIR" "$WORKFLOWS_DIR"
 
-count=0
+skill_count=0
 native_count=0
 for skill_dir in "$SCRIPT_DIR"/skills/*; do
   [ -d "$skill_dir" ] || continue
@@ -71,7 +64,7 @@ for skill_dir in "$SCRIPT_DIR"/skills/*; do
 
   ln -s "$skill_dir" "$target"
   info "Linked Codex skill: $name"
-  count=$((count + 1))
+  skill_count=$((skill_count + 1))
 
   native_target="$AGENTS_SKILLS_DIR/$name"
   if [ -L "$native_target" ]; then
@@ -86,28 +79,23 @@ for skill_dir in "$SCRIPT_DIR"/skills/*; do
   native_count=$((native_count + 1))
 done
 
-printf '\nJira-Flow Codex installed: %s skill(s) linked to %s\n' "$count" "$SKILLS_DIR"
+for command_file in "$SCRIPT_DIR"/commands/*.md; do
+  [ -f "$command_file" ] || continue
+  name="$(basename "$command_file")"
+
+  command_target="$COMMANDS_DIR/$name"
+  workflow_target="$WORKFLOWS_DIR/$name"
+
+  rm -f "$command_target"
+  cp "$command_file" "$command_target"
+  info "Installed command shim: ${name%.md}"
+
+  rm -f "$workflow_target"
+  cp "$command_file" "$workflow_target"
+  info "Installed workflow shim: ${name%.md}"
+done
+
+printf '\nDev-Flow Codex installed: %s skill(s) linked to %s\n' "$skill_count" "$SKILLS_DIR"
 printf 'Native discovery: %s skill(s) linked to %s\n' "$native_count" "$AGENTS_SKILLS_DIR"
-
-if [ -d "$SCRIPT_DIR/commands" ]; then
-  mkdir -p "$COMMANDS_DIR" "$WORKFLOWS_DIR"
-  for command_file in "$SCRIPT_DIR"/commands/*.md; do
-    [ -f "$command_file" ] || continue
-    name="$(basename "$command_file")"
-
-    command_target="$COMMANDS_DIR/$name"
-    workflow_target="$WORKFLOWS_DIR/$name"
-
-    rm -f "$command_target"
-    cp "$command_file" "$command_target"
-    info "Installed command shim: ${name%.md}"
-
-    rm -f "$workflow_target"
-    cp "$command_file" "$workflow_target"
-    info "Installed workflow shim: ${name%.md}"
-  done
-fi
-
-printf 'Try: /jira-flow PROJ-123\n'
-printf 'Team mode: /jira-flow-team PROJ-123\n'
-printf 'Fallback: 使用 jira-flow 处理 PROJ-123\n'
+printf 'Try: /dev-flow PROJ-123\n'
+printf 'Fallback: 使用 dev-flow 处理 PROJ-123\n'

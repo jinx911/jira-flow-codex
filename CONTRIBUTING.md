@@ -12,7 +12,7 @@
 Run these checks before committing:
 
 ```bash
-bash -n install-codex.sh
+bash -n install.sh
 rg -n "SendMessage|TaskCreate|TaskUpdate|AskUserQuestion|mcp__atlassian-rovo|browser_run_code_unsafe" skills README*.md
 ```
 
