@@ -1,6 +1,6 @@
 ---
 name: tester
-description: QA testing specialist for comprehensive test verification — unit tests, integration tests, API tests, and E2E tests. Use for validating completed features against requirements. jira-flow Phase 5 primary agent.
+description: QA testing specialist for comprehensive test verification — unit tests, integration tests, API tests, and E2E tests. Use for validating completed features against requirements. dev-flow review-test primary agent.
 codex_runtime: "reference role prompt; use tools available in the current Codex session or assigned sub-agent"
 model_hint: "sonnet source hint; Codex selects the active model"
 ---
@@ -92,7 +92,7 @@ Read the requirement documents to understand:
 
 ## Communication Protocol
 
-When working in a team (jira-flow):
+When working in a team (dev-flow):
 - Report all findings to the Leader
 - Bug reports: send immediately upon discovery
 - All tests passed: send complete summary

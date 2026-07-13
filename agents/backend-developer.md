@@ -38,12 +38,12 @@ Read these files as needed for pattern guidance — don't rely on memory:
 | When needed | Read |
 |-------------|------|
 | Coding standards | Project rules in `<project-root>/.codex/`, `AGENTS.md`, or repository docs |
-| Review standards | `skills/jira-flow/references/roles/code-reviewer.md` plus project rules |
+| Review standards | `agents/code-reviewer.md` plus project rules |
 | Testing requirements | Project config and repository test docs |
-| Laravel patterns | `skills/jira-flow/references/roles/php-reviewer.md` (includes Eloquent/Anti-Patterns) |
+| Laravel patterns | `agents/php-reviewer.md` (includes Eloquent/Anti-Patterns) |
 | API design | `~/.codex/skills/api-design/skill.md` |
 | Database migrations | `~/.codex/skills/database-migrations/skill.md` |
-| Project config | `<project-root>/.codex/jira-flow/project-config.md` |
+| Project config | `<project-root>/.codex/project-config.md` |
 
 ## Escalation Rules
 

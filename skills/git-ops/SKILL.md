@@ -1,45 +1,50 @@
 ---
 name: git-ops
-description: Codex-safe git operation guidance for Jira-Flow Codex.
-version: 0.1.0
-tags: [git, codex, jira-flow]
+description: Use when user wants to perform git operations — creating branches, committing code, pushing, updating branches, merging, or cleaning up branches. Supports single-repo and multi-repo architectures via project-config.
 ---
 
-# Git Ops
+# Git Ops：多仓库/单仓库 Git 操作
 
-## Rules
+**输入**：`$ARGUMENTS`（可选：模块名、分支名等）
 
-- Never run destructive git commands unless the user explicitly approves.
-- Never revert unrelated user changes.
-- Prefer non-interactive git commands.
-- Before branch or commit operations, inspect `git status --short`.
-- Commit only files that belong to the current Jira-Flow task.
+## 初始化
 
-## Common Operations
+1. 读 `<root_path>/.codex/project-config.md`（唯一来源；不存在→提示先 `/init-dev-flow`）。
+2. 提取：`root_path`、`git.main_branch`(默认 main)、`git.commit_format`、`git.branch_naming.format`、`modules`（有=多仓库）、`backend.main_repo`、`frontend.repo_path`、`java` 仓库列表。
 
-Create a branch:
+## 架构检测
 
-```bash
-git switch -c <issue-key>
+```
+有 modules → multi-repo: [main_repo]+modules+[frontend_repo]+[java_repos]，分支/推/并/清操作展示交互选择；commit 自动扫变更仓库
+无 modules → single-repo: [root_path]，所有操作直接执行
 ```
 
-Inspect changes:
+## 触发词
 
-```bash
-git status --short
-git diff --stat
-git diff
-```
+| 触发 | 操作 |
+|------|------|
+| "创建分支"/"开始需求" | 创建分支 |
+| "更新分支"/"rebase" | 更新分支 |
+| "commit"/"提交" | 提交代码 |
+| "push"/"推送" | 推送远程 |
+| "完成需求"/"合并分支" | 合并到主分支 |
+| "清理分支"/"删除分支" | 清理分支 |
 
-Commit:
+## 仓库选择（仅 multi-repo）
 
-```bash
-git add <paths>
-git commit -m "<type>(<scope>): <intent>"
-```
+分支/推/并/清操作前列仓库供选（后端 `[1]主仓库 [2]模块…` / 前端 / Java），编号逗号分隔或 `all`。**commit 例外**：自动扫有变更仓库。
 
-Push:
+## 分支保护 + Stash + 各操作详细步骤
 
-```bash
-git push -u origin <branch>
-```
+**见 `references/git-detail.md`**：
+- §分支保护规则（master/test/pre 保护 + 合并方向白名单 + 检测逻辑）
+- §Stash 兜底（写操作前自动 stash/unstash）
+- §各操作流程（创建/更新/提交/推送/合并/清理的具体命令 + 展示清单）
+- §全局规则（写操作必确认、冲突即停、不擅自 push、`git -C` 不依赖 cd 等）
+
+## 全局规则（核心）
+
+- 所有写操作**必须用户确认**，绝不擅自执行；每次前展示清单。
+- 冲突**不自动解决**，立即停止。
+- `master`/`test`/`pre` 禁止直接 commit；`test`/`pre` 禁止向外合并（详见 references）。
+- 默认不 push；无变更仓库跳过；用 `git -C <path>` 执行。

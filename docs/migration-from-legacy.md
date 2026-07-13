@@ -1,25 +1,42 @@
-# Migration From Legacy Jira-Flow
+# Migration From Legacy Jira-Flow To Dev-Flow Codex
 
-This project is Codex-native. It intentionally does not install or modify legacy runtime directories.
+This repository now follows the `dev-flow` architecture instead of the old monolithic `jira-flow` layout.
 
-## Directory Mapping
+## Naming Changes
 
-| Legacy location | Codex location |
+| Legacy name | New name |
 | --- | --- |
-| `~/.claude/skills/<skill>/skill.md` | `~/.codex/skills/<skill>/SKILL.md` |
-| `~/.claude/agents/*.md` | `skills/jira-flow/references/roles/*.md` |
-| `<project-root>/.claude/project-config.md` | `<project-root>/.codex/jira-flow/project-config.md` |
-| `<project-root>/.jira-flow/*-state.json` | `<project-root>/.codex/jira-flow/state/{issue_key}.json` |
+| `jira-flow` | `dev-flow` |
+| `init-jira-flow` | `init-dev-flow` |
+| `skills/jira-flow/` | `skills/dev-flow/` |
+| `skills/init-jira-flow/` | `skills/init-dev-flow/` |
+| `commands/jira-flow.md` | `commands/dev-flow.md` |
+| `commands/init-jira-flow.md` | `commands/init-dev-flow.md` |
+| `install-codex.sh` | `install.sh` |
 
-## Config Migration
+## Structure Changes
 
-When initializing an existing project, `init-jira-flow` may read a legacy project config as a compatibility source. It should write the Codex config to `.codex/jira-flow/project-config.md`.
+| Legacy structure | New structure |
+| --- | --- |
+| Single `jira-flow` skill with 6 phase briefs | Thin `dev-flow` orchestrator + 4 stage skills |
+| `skills/jira-flow/references/phases/*.md` | `skills/spec-author/`, `skills/dev-loop/`, `skills/review-test/`, `skills/ship/` |
+| `skills/jira-flow/references/roles/*.md` | `agents/*.md` |
+| `.codex/jira-flow/state/` | `.dev-flow/*-state.json` and `.dev-flow/{issue_key}/spec/` |
 
-Do not copy secrets into the Codex config. Use environment variable names or secret-manager references.
+## Runtime Notes
 
-## Runtime Differences
+- This repo remains Codex-native for installation and runtime assumptions.
+- Skills install into `~/.codex/skills/`.
+- Command shims install into `~/.codex/commands/` and `~/.codex/workflows/`.
+- The workflow no longer treats old `/jira-flow` and `/init-jira-flow` as active entrypoints.
 
-- Codex skills use uppercase `SKILL.md`.
-- Role prompts are references. They are injected into optional Codex sub-agents only when the user explicitly requests team/sub-agent mode.
-- Jira operations use Codex Atlassian Rovo tools.
-- State is stored per issue under `.codex/jira-flow/state/`.
+## Config Notes
+
+When migrating an initialized project, prefer generating new configuration through `/init-dev-flow`.
+
+If you still need to read older settings:
+
+- legacy Codex config: `<project-root>/.codex/jira-flow/project-config.md`
+- newer dev-flow project config target: `<project-root>/.codex/project-config.md`
+
+Do not copy secrets blindly between formats. Keep secret references or environment variable names only.
