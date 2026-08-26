@@ -171,7 +171,7 @@ mkdir -p ~/.codex/configs/dev-flow {root_path}/.codex/hooks {root_path}/.dev-flo
 
 ## 6. 依赖验证清单
 
-**Skills（`~/.codex/skills/`）**：create-team、delete-team、git-ops、dev-flow、spec-author、dev-loop、review-test、ship。
+**Skills（`~/.codex/skills/`）**：create-team、delete-team、git-ops、dev-flow、spec-author、dev-loop、review-test、ship、learn。`bugfix-flow` 为推荐增强项，不阻塞主流程初始化。
 **Agents（可选，非依赖）**：dev-flow 不读 agents；缺了不阻塞。
 **Superpowers**：`~/.codex/plugins/` 有 superpowers 目录，或 settings.json plugins 含 superpowers（>=5.0.0）。
 **MCP**：atlassian-rovo（第 2 步已验）；MySQL / Playwright 可选（查 settings.json mcpServers）。如果当前会话只有 Jira 写工具、没有读工具，则标记 jira 模式为“受限”。

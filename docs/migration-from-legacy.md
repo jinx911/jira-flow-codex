@@ -22,12 +22,15 @@ This repository now follows the `dev-flow` architecture instead of the old monol
 | `skills/jira-flow/references/phases/*.md` | `skills/spec-author/`, `skills/dev-loop/`, `skills/review-test/`, `skills/ship/` |
 | `skills/jira-flow/references/roles/*.md` | `agents/*.md` |
 | `.codex/jira-flow/state/` | `.dev-flow/*-state.json` and `.dev-flow/{issue_key}/spec/` |
+| no learning loop | `skills/learn/` + `.dev-flow/knowledge.md` + `playbook.md` |
+| no lightweight repair path | `skills/bugfix-flow/` |
 
 ## Runtime Notes
 
 - This repo remains Codex-native for installation and runtime assumptions.
 - Skills install into `~/.codex/skills/`.
 - Command shims install into `~/.codex/commands/` and `~/.codex/workflows/`.
+- `sync-local.sh` supports copy-based local skill sync for authors who do not want symlinked runtime state.
 - The workflow no longer treats old `/jira-flow` and `/init-jira-flow` as active entrypoints.
 
 ## Config Notes
@@ -40,3 +43,12 @@ If you still need to read older settings:
 - newer dev-flow project config target: `<project-root>/.codex/project-config.md`
 
 Do not copy secrets blindly between formats. Keep secret references or environment variable names only.
+
+## Content Upgrades
+
+Compared with the old monolithic `jira-flow` layout, `dev-flow-codex` now also upgrades workflow semantics:
+
+- Gate 1 adds an explicit key-decision mini-gate before Stage 2
+- Gate 2 requires raw test evidence, not verbal pass/fail summaries
+- `learn` captures and reapplies project knowledge across runs
+- `bugfix-flow` offers a focused repair path separate from full feature delivery

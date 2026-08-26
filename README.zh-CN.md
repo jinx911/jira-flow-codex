@@ -4,7 +4,7 @@
 
 这是一个 Codex 原生的 `dev-flow` 工作流仓库。
 
-它把原本的 `jira-flow-codex` 对齐到新的 `dev-flow` 架构：
+它把原本的 `jira-flow-codex` 升级到新的 `dev-flow` 架构与内容模型：
 
 ```text
 需求（Jira key 或自然语言） -> 4 个 Stage + 4 个 Gate -> 分支推送 + Jira 收尾
@@ -19,6 +19,8 @@ Stage 4: 收尾     (ship)        -> 推送 + 可选部署 + Jira 收尾
 
 - `skills/dev-flow/` 是薄编排器。
 - `spec-author`、`dev-loop`、`review-test`、`ship` 是可独立调用的阶段子 skill。
+- `learn` 提供 `apply` / `capture` / `distill` 的学习闭环。
+- `bugfix-flow` 提供轻量缺陷修复路径。
 - `init-dev-flow`、`create-team`、`delete-team`、`git-ops` 提供初始化和支撑能力。
 - `agents/` 存放可选角色提示文件；主流程不依赖这些 agent 文件。
 
@@ -31,6 +33,7 @@ Stage 4: 收尾     (ship)        -> 推送 + 可选部署 + Jira 收尾
 - 同时链接到 `~/.agents/skills/`，增强 native discovery
 - 运行时配置放在 `~/.codex/configs/dev-flow/`，不要写进符号链接出去的 skill 目录
 - Jira 操作预期通过 Codex 的 Atlassian Rovo 工具链执行
+- 提供 `./sync-local.sh` 作为本地复制式同步方案
 
 ## 安装
 
@@ -40,6 +43,13 @@ chmod +x install.sh uninstall.sh
 ./install.sh
 ```
 
+如果你在迭代 skill 本身，也可用复制式同步：
+
+```bash
+chmod +x sync-local.sh
+./sync-local.sh --all
+```
+
 ## 使用
 
 推荐命令：
@@ -47,6 +57,7 @@ chmod +x install.sh uninstall.sh
 ```text
 /init-dev-flow
 /dev-flow PROJ-123
+/bugfix-flow PROJ-456
 ```
 
 如果当前 Codex 环境没有加载自定义 slash command，可使用等价表达：
@@ -64,6 +75,8 @@ skills/spec-author/
 skills/dev-loop/
 skills/review-test/
 skills/ship/
+skills/learn/
+skills/bugfix-flow/
 skills/init-dev-flow/
 skills/create-team/
 skills/delete-team/
@@ -71,11 +84,12 @@ skills/git-ops/
 agents/
 commands/dev-flow.md
 commands/init-dev-flow.md
+commands/bugfix-flow.md
 ```
 
 ## 迁移说明
 
-旧版 `jira-flow` 到新 `dev-flow` 体系的迁移说明见 [docs/migration-from-legacy.md](docs/migration-from-legacy.md)。
+旧版 `jira-flow` 到新 `dev-flow` 体系的迁移说明见 [docs/migration-from-legacy.md](docs/migration-from-legacy.md)，团队上手说明见 [docs/dev-flow-training.md](docs/dev-flow-training.md)。
 
 ## 许可证
 

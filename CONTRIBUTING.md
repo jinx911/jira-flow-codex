@@ -12,11 +12,11 @@
 Run these checks before committing:
 
 ```bash
-bash -n install.sh
-rg -n "SendMessage|TaskCreate|TaskUpdate|AskUserQuestion|mcp__atlassian-rovo|browser_run_code_unsafe" skills README*.md
+bash -n install.sh uninstall.sh sync-local.sh
+rg -n "SendMessage|TaskCreate|TaskUpdate|Agent\\(|team-orchestration|skills/jira-flow|~/.claude" skills commands README*.md docs --glob '!docs/migration-from-legacy.md' --glob '!skills/dev-flow/resume.md'
 ```
 
-The `rg` command should return no matches unless the match is in migration documentation and explicitly marked as legacy context.
+The `rg` command should return no matches.
 
 ## Commit Style
 
