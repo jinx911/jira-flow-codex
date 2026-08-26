@@ -24,6 +24,7 @@ Leader 每阶段触发一个子 skill、跑 Gate（checklist）、再推进。Le
 | `team-rules.md` | 瘦身通信规则 + Health（空闲/ping）+ 变量注入 |
 | `resume.md` | 断点恢复 + 重试上限 + 旧 `.jira-flow` 兼容 |
 | `project-config.example.md` | 项目配置模板 |
+| `playbook.md` | 全局经验缓冲层（由 learn distill 增长） |
 
 ## 子 skill（每个可独立调用）
 
@@ -31,11 +32,15 @@ Leader 每阶段触发一个子 skill、跑 Gate（checklist）、再推进。Le
 - `dev-loop` —— TDD 开发 + 文档优先变更
 - `review-test` —— 代码审查 + 验证 + 修复环
 - `ship` —— 收尾 + 部署 + Jira 收尾
+- `learn` —— 学习闭环（capture/apply/distill）
+- `bugfix-flow` —— 轻量 bug 修复流程
 ## 关键特性
 
 - **角色专长内嵌子 skill** —— dev-flow **不读** `~/.codex/agents/*.md`。
 - **活文档** —— 开发中发现需求缺口，先改文档再改代码（追踪 `doc_version`）。
 - **条件化 TDD** —— 按单元测试策略（`tdd` / `regression` / `smoke` / `none`）。
 - **预生成 prompt 文件** —— spawn = 读文件内容 + `spawn_agent`；不做每次 spawn 的 prompt 拼接。
+- **学习闭环** —— Stage 0 注入经验，Stage 4 记信号，周期性提炼知识库与 playbook。
+- **更强 Gate** —— Gate 1 关键决策 mini-Gate；Gate 2 强制测试原始证据。
 
 安装、配置、完整文件树见顶层 `README.md`。

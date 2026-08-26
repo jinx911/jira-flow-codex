@@ -37,6 +37,7 @@ description: 审查并验证开发分支时使用。跑结构化代码审查（�
 - [ ] 无未解决 HIGH 问题
 - [ ] 所有 `tdd`/`regression` 单元有对应测试且通过；`smoke` 至少冒烟
 - [ ] 无未修 bug；证据齐（命令 + 输出 + 退出码）
+- [ ] 若测试报告声称通过，需能追溯到原始计数与失败列表；缺任一项视为未完成
 
 ## Dependencies
 - Agents（内嵌）：code-reviewer、tester
